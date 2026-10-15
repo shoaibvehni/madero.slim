@@ -3,5 +3,14 @@
   "framework": null,
   "buildCommand": "",
   "installCommand": "",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "functions": {
+    "api/chat.js": {"maxDuration": 30, "includeFiles": "knowledge/**"}
+  },
+  "headers": [
+    {"source": "/sw.js", "headers": [{"key": "Cache-Control", "value": "no-cache, no-store, must-revalidate"}, {"key": "Service-Worker-Allowed", "value": "/"}]},
+    {"source": "/manifest.webmanifest", "headers": [{"key": "Content-Type", "value": "application/manifest+json"}, {"key": "Cache-Control", "value": "no-cache"}]},
+    {"source": "/api/(.*)", "headers": [{"key": "Cache-Control", "value": "no-store"}]},
+    {"source": "/(.*)", "headers": [{"key": "X-Content-Type-Options", "value": "nosniff"}, {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"}]}
+  ]
 }
