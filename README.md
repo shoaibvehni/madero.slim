@@ -55,10 +55,18 @@ npm run dev
 
 ## Verification and limits
 
-12 automated tests pass: message validation, provider request/context, missing key, rate limits, errors, menu completeness, app-shell existence, offline fallback and API cache exclusion. Static verification checks all page links, image decoding, icon dimensions, manifest, API config and JavaScript syntax. API credentials are absent from browser code.
+15 automated tests pass, including direct contact links, native Reel markup, lazy loading and embed-error fallback, plus: message validation, provider request/context, missing key, rate limits, errors, menu completeness, app-shell existence, offline fallback and API cache exclusion. Static verification checks all page links, image decoding, icon dimensions, manifest, API config and JavaScript syntax. API credentials are absent from browser code.
 
 Browser visual QA, a real device installation, live Vercel deployment and live AI calls could not be performed in this environment. The repository includes the implementation and explicit activation steps, not a claim that these live checks passed.
 
 ## Research
 
 [Competitor research and before/after comparison](docs/COMPETITOR_RESEARCH.md) · [Image credits](docs/ASSET_CREDITS.md)
+
+## Direct contact and Instagram Reels
+
+WhatsApp for info and Talk on Instagram buttons appear on every page, separate from booking and AI chat. On desktop they sit at the lower left opposite the concierge. On mobile they form a compact contact strip above the app navigation. The homepage also has direct contact links beside the introduction.
+
+Home and Gallery show three curated public Reels from `@madero.slim` using native `instagram-media` markup and Instagram's official `https://www.instagram.com/embed.js`. The script loads only as the Reel section approaches the viewport. No video files are downloaded, mirrored, proxied or cached. Each Reel keeps a permanent direct Instagram link if the embed is blocked or unavailable. Instagram controls availability and playback.
+
+Edit the `REELS` list in `build.py`, then regenerate pages to change the selection. These are curated embeds, not an automatic latest-post feed. The selected permalinks were observed on the business's public profile; Instagram required sign-in to inspect individual Reel captions in this environment, so headings are editorial rather than quotes from captions.

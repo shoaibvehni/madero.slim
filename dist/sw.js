@@ -1,5 +1,5 @@
-const VERSION='madero-v2-20261015-1';
-const SHELL=['/index.html','/offline.html','/services.html','/booking.html','/styles.css','/app.js','/concierge.js','/install.js','/manifest.webmanifest','/assets/logo.png','/assets/icon-192.png','/assets/icon-512.png','/assets/massage.webp','/assets/facial.webp','/assets/ritual.webp','/assets/spa.webp','/assets/madero.webp'];
+const VERSION='madero-v2-20261015-2';
+const SHELL=['/index.html','/offline.html','/services.html','/booking.html','/styles.css','/app.js','/concierge.js','/install.js','/social.js','/manifest.webmanifest','/assets/logo.png','/assets/icon-192.png','/assets/icon-512.png','/assets/massage.webp','/assets/facial.webp','/assets/ritual.webp','/assets/spa.webp','/assets/madero.webp'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(SHELL)))});
 self.addEventListener('activate',event=>{event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('madero-')&&key!==VERSION).map(key=>caches.delete(key)))),self.clients.claim()]))});
 self.addEventListener('fetch',event=>{const req=event.request,url=new URL(req.url);if(req.method!=='GET'||url.origin!==self.location.origin||url.pathname.startsWith('/api/'))return;

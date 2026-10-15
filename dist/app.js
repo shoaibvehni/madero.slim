@@ -1,6 +1,7 @@
 'use strict';
 import { initConcierge } from './concierge.js';
 import { initInstall } from './install.js';
+import { initReels } from './social.js';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 // Reveal enhancements never hide content when scripting or observer support fails.
 if('IntersectionObserver' in window){document.documentElement.classList.add('js');const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}},{threshold:.06});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
@@ -26,5 +27,5 @@ ask?.addEventListener('click',()=>{const text=`Hello Madero Slim! I’m interest
 // App navigation is built once and is separate from the desktop navigation.
 const icons={home:'<path d="m3 10 9-7 9 7v10H3Z"/><path d="M9 20v-7h6v7"/>',ritual:'<path d="M12 3c-3 5-8 7-8 12a8 8 0 0 0 16 0c0-5-5-7-8-12Z"/><path d="M8 15c1 2 3 3 5 3"/>',chat:'<path d="M21 11a8 8 0 0 1-8 8H7l-4 3V11a9 9 0 0 1 18 0Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>',book:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 10h18m-13 5 3 3 5-5"/>'};const svg=name=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
 const dock=document.createElement('nav');dock.className='mobile-dock';dock.setAttribute('aria-label','App navigation');dock.innerHTML=`<a href="index.html" ${document.body.dataset.page==='index'?'class="dock-active" aria-current="page"':''}>${svg('home')}Home</a><a href="services.html" ${document.body.dataset.page==='services'?'class="dock-active" aria-current="page"':''}>${svg('ritual')}Rituals</a><button class="open-chat">${svg('chat')}Concierge</button><a class="dock-book" href="booking.html">${svg('book')}Book now</a>`;document.body.append(dock);
-initConcierge();initInstall();
+initConcierge();initInstall();initReels();
 if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').then(reg=>{reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller){const toast=document.createElement('div');toast.className='site-toast';toast.setAttribute('role','status');toast.textContent='An update is ready. Reopen the app for the latest version.';document.body.append(toast);setTimeout(()=>toast.remove(),7000)}})})}).catch(()=>{/* The website remains fully usable without offline support. */})})}
