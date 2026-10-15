@@ -55,7 +55,7 @@ npm run dev
 
 ## Verification and limits
 
-15 automated tests pass, including direct contact links, native Reel markup, lazy loading and embed-error fallback, plus: message validation, provider request/context, missing key, rate limits, errors, menu completeness, app-shell existence, offline fallback and API cache exclusion. Static verification checks all page links, image decoding, icon dimensions, manifest, API config and JavaScript syntax. API credentials are absent from browser code.
+16 automated tests pass, including direct contact links, native Reel markup, lazy loading and embed-error fallback, plus: message validation, provider request/context, missing key, rate limits, errors, menu completeness, app-shell existence, offline fallback and API cache exclusion. Static verification checks all page links, image decoding, icon dimensions, manifest, API config and JavaScript syntax. API credentials are absent from browser code.
 
 Browser visual QA, a real device installation, live Vercel deployment and live AI calls could not be performed in this environment. The repository includes the implementation and explicit activation steps, not a claim that these live checks passed.
 
@@ -70,3 +70,13 @@ WhatsApp for info and Talk on Instagram buttons appear on every page, separate f
 Home and Gallery show three curated public Reels from `@madero.slim` using native `instagram-media` markup and Instagram's official `https://www.instagram.com/embed.js`. The script loads only as the Reel section approaches the viewport. No video files are downloaded, mirrored, proxied or cached. Each Reel keeps a permanent direct Instagram link if the embed is blocked or unavailable. Instagram controls availability and playback.
 
 Edit the `REELS` list in `build.py`, then regenerate pages to change the selection. These are curated embeds, not an automatic latest-post feed. The selected permalinks were observed on the business's public profile; Instagram required sign-in to inspect individual Reel captions in this environment, so headings are editorial rather than quotes from captions.
+
+## AI verification and conversational behaviour
+
+The concierge now supports short general explanations, arithmetic, writing and translation as well as business questions. Business facts remain grounded in the supplied documents. Successful model responses include `ai.provider`/`ai.model` metadata and `X-Madero-AI-Provider`/`X-Madero-AI-Model` response headers, plus an AI-generated label in the chat UI. These are only set after a successful upstream model call. No secrets are returned.
+
+A live production API request on 15 October 2026 returned HTTP 200 and combined AED 350 + AED 250 services into an AED 600 / 150-minute plan. This confirms that the configured production API is reachable and producing model-generated replies; it does not guarantee factual correctness of every reply.
+
+Useful conversational tests: ask for two sessions under AED 600; then change the budget and ask for an alternative; then ask for an Arabic booking message. To inspect the transport, check the `/api/chat` response in browser developer tools. Random off-topic refusal is not evidence that AI is missing; the system prompt determines topic boundaries.
+
+For true autoplay/looping videos hosted on the website, see [original video setup](docs/INSTAGRAM_REELS.md). Original MP4 files still need to be supplied; Instagram embeds cannot be force-controlled by this website.

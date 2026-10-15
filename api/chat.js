@@ -25,7 +25,9 @@ export function createHandler({fetcher=fetch,env=process.env,now=Date.now}={}){
    if(!upstream.ok){if(upstream.status===429){res.setHeader('Retry-After','60');return respond(429,{message:'Our AI concierge is busy right now. Please try again shortly or reach the team on WhatsApp.'})}return respond(502,{message:'Our AI concierge is temporarily unavailable. Our team can help on WhatsApp.'})}
    const data=await upstream.json();const reply=data.choices?.[0]?.message?.content;
    if(typeof reply!=='string'||!reply.trim())return respond(502,{message:'We could not finish that reply. Please try again or reach us on WhatsApp.'});
-   return respond(200,{reply:reply.trim().slice(0,5000),sources});
+   res.setHeader('X-Madero-AI-Provider','Groq');
+   res.setHeader('X-Madero-AI-Model',env.GROQ_MODEL||'openai/gpt-oss-20b');
+   return respond(200,{reply:reply.trim().slice(0,5000),sources,ai:{provider:'Groq',model:env.GROQ_MODEL||'openai/gpt-oss-20b'}});
   }catch{return respond(503,{message:'The concierge could not connect right now. Please try again or message our team on WhatsApp.'})}finally{clearTimeout(timer)}
  };
 }
