@@ -31,7 +31,7 @@ def social_icon(name):
 def quick_contact():
  return f'''<aside class="quick-contact" aria-label="Direct contact"><a class="quick-whatsapp" href="{WA}" target="_blank" rel="noopener">{social_icon('whatsapp')}<span>WhatsApp for info</span><span aria-hidden="true">↗</span></a><a class="quick-instagram" href="{INSTA}" target="_blank" rel="noopener">{social_icon('instagram')}<span>Talk on Instagram</span><span aria-hidden="true">↗</span></a></aside>'''
 # Public Reel permalinks observed on the business's Instagram profile on 15 October 2026.
-REELS=[('Dec9bDmgDRE','A closer look at Madero'),('DeXw4k9o0Hc','From our wellness journal'),('DeUmRr6oyJY','A moment with Madero Slim')]
+REELS=[('Dec9bDmgDRE','Deep Detox & Madero'),('DeXw4k9o0Hc','Body care, at home'),('DeUmRr6oyJY','Lymphatic & Madero therapy')]
 def native_media(code):
  config_path=root/'reel-media.json'
  media=json.loads(config_path.read_text()) if config_path.exists() else {}
@@ -53,11 +53,13 @@ def reels():
   url=f'https://www.instagram.com/madero.slim/reel/{code}/'
   source=native_media(code)
   if source:
-   player=f'''<div class="native-reel-player"><video class="native-reel-video" src="{html.escape(source,quote=True)}" autoplay muted loop playsinline controls preload="metadata" aria-label="{html.escape(title,quote=True)}"><a href="{html.escape(source,quote=True)}">Play this video</a></video><span class="native-reel-status" hidden>Tap Play to watch this video.</span></div>'''
+   player=f'''<div class="native-reel-player"><video class="native-reel-video" src="{html.escape(source,quote=True)}" autoplay muted loop playsinline controls preload="metadata" poster="{html.escape(str(Path(source).with_suffix(chr(46)+chr(106)+chr(112)+chr(103))),quote=True)}" aria-label="{html.escape(title,quote=True)}"><a href="{html.escape(source,quote=True)}">Play this video</a></video><span class="native-reel-status" hidden>Tap Play to watch this video.</span></div>'''
   else:
    player=f'''<div class="reel-mount"><blockquote class="instagram-media" data-instgrm-permalink="{url}" data-instgrm-version="14"><a href="{url}" target="_blank" rel="noopener"><span class="reel-placeholder-icon" aria-hidden="true">▷</span><strong>Watch Madero Slim on Instagram</strong><span>Loading the official Instagram player…</span></a></blockquote></div>'''
-  cards.append(f'''<article class="reel-card"><div class="reel-card-heading"><span class="eyebrow">@MADERO.SLIM · REEL 0{i+1}</span><h3>{title}</h3></div>{player}<a class="reel-direct-link" href="{url}" target="_blank" rel="noopener">View the original on Instagram ↗</a></article>''')
- return '<section class="section reels-section" id="instagram-reels">'+heading('INSTAGRAM REELS · @MADERO.SLIM','Care, <em>in motion.</em>','A closer look at our world, shared straight from Madero Slim’s Instagram.')+'<div class="reel-grid">'+''.join(cards)+'</div><div class="reels-footer"><p class="reels-status" role="status">Instagram-hosted players depend on Instagram availability. Original videos play here when available.</p><a class="text-link" href="'+INSTA+'" target="_blank" rel="noopener">More from @madero.slim ↗</a></div></section>'
+  direct_url=INSTA if source else url
+  direct_label="More from Madero Slim on Instagram ↗" if source else "View the original on Instagram ↗"
+  cards.append(f'''<article class="reel-card"><div class="reel-card-heading"><span class="eyebrow">@MADERO.SLIM · REEL 0{i+1}</span><h3>{title}</h3></div>{player}<a class="reel-direct-link" href="{direct_url}" target="_blank" rel="noopener">{direct_label}</a></article>''')
+ return '<section class="section reels-section" id="instagram-reels">'+heading('TREATMENTS IN MOTION · MADERO SLIM','Care, <em>in motion.</em>','Watch our treatment videos right here. A closer look at the care we bring to your home.')+'<div class="reel-grid">'+''.join(cards)+'</div><div class="reels-footer"><p class="reels-status" role="status">Videos play here, muted on repeat. Use the player controls for sound or to pause.</p><a class="text-link" href="'+INSTA+'" target="_blank" rel="noopener">More from @madero.slim ↗</a></div></section>'
 def page(title,body,slug):
  current='index' if slug=='index' else slug
  header=f'''<a class="skip" href="#main">Skip to content</a><div class="topbar"><span>YOUR HOME. YOUR MOMENT.</span><span>DUBAI · SHARJAH · AJMAN</span><a href="tel:+971521275611">+971 52 127 5611</a></div><header><a class="brand" href="index.html"><img src="assets/logo.png" alt="Madero Slim logo" width="58" height="58"><span>MADERO<span class="brand-small">SLIM · UAE</span></span></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-nav"><span></span><span></span></button><nav id="main-nav" aria-label="Main navigation">{''.join(f'<a href="{s}.html" '+('aria-current="page"' if s==current else '')+f'>{n}</a>' for n,s in nav)}<button class="install-trigger nav-install" hidden>Install app ↓</button><a class="button small" href="booking.html">Book your moment <span>↗</span></a></nav></header>'''

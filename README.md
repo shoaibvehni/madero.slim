@@ -79,4 +79,9 @@ A live production API request on 15 October 2026 returned HTTP 200 and combined 
 
 Useful conversational tests: ask for two sessions under AED 600; then change the budget and ask for an alternative; then ask for an Arabic booking message. To inspect the transport, check the `/api/chat` response in browser developer tools. Random off-topic refusal is not evidence that AI is missing; the system prompt determines topic boundaries.
 
-For true autoplay/looping videos hosted on the website, see [original video setup](docs/INSTAGRAM_REELS.md). Original MP4 files still need to be supplied; Instagram embeds cannot be force-controlled by this website.
+For true autoplay/looping videos hosted on the website, see [original video setup](docs/INSTAGRAM_REELS.md). Three original MP4 files have now been supplied and are served inline from this website with muted autoplay, looping, native controls and poster images. Instagram links are optional profile links, not the video player.
+
+
+## Uploaded treatment videos
+
+Three user-supplied 720×1280 H.264/AAC videos are now included in `dist/assets/reels/`. They were remuxed losslessly with fast-start metadata, with JPEG poster frames extracted. The home and gallery pages use native video players rather than Instagram embeds. All three outputs passed a full FFmpeg decode check. Videos play muted on repeat while visible; controls enable sound or pause. Browser autoplay restrictions can still require a tap. MP4s are not cached offline.

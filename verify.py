@@ -18,9 +18,14 @@ for p in root.glob('*.html'):
  if p.stem not in ['404','offline']:assert 'privacy.html' in s
 for name in ['index','services','gallery','team','reviews','booking','contact','about','privacy','face-lifting','deep-detox','lymphatic-drainage','madero-therapy','deep-tissue','cupping','head-shoulder-feet','hot-stone','404','offline']:
  assert (root/f'{name}.html').exists()
-for p in (root/'assets').iterdir():
+for p in (root/'assets').rglob('*'):
+ if not p.is_file():continue
  assert p.stat().st_size>1000
- with Image.open(p) as image:image.verify()
+ if p.suffix=='.mp4':
+  info=json.loads(subprocess.check_output(['ffprobe','-v','quiet','-show_streams','-of','json',str(p)]))
+  assert any(s.get('codec_name')=='h264' and s.get('width')==720 for s in info['streams'])
+ else:
+  with Image.open(p) as image:image.verify()
 for size in [192,512]:assert Image.open(root/f'assets/icon-{size}.png').size==(size,size)
 manifest=json.loads((root/'manifest.webmanifest').read_text())
 assert manifest['display']=='standalone' and manifest['scope']=='/'
