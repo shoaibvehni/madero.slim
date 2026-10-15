@@ -19,6 +19,12 @@ No dependencies or build step required. Run `python3 -m http.server 8080 --direc
 
 No fabricated testimonials, appointments, body results or extra gallery photos. Instagram video access is linked out because source reel files were not supplied.
 
+## Vercel deployment
+
+Import `shoaibvehni/madero.slim` into Vercel. Keep **Root Directory** at the repository root (blank or `.`), and deploy branch `main`. The tracked `vercel.json` selects **Other**, skips installation/build (files are already committed), and publishes `dist/`. Do not set the root to `dist` while using this root config.
+
+If the existing Vercel project shows `404 NOT_FOUND`, check its Root Directory, then deploy the latest `main` commit. Old deployment URLs remain tied to their old deployments. Open the newest successful deployment or your production domain.
+
 ## Hosting
 
 Deploy `dist/` to any static host. GitHub Pages workflow is included and requires Pages source **GitHub Actions** in repository Settings → Pages. Native Sites hosting metadata is in `.openai/hosting.json`.
