@@ -5,7 +5,7 @@ import { initReels } from './social.js';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 // Reveal enhancements never hide content when scripting or observer support fails.
 if('IntersectionObserver' in window){document.documentElement.classList.add('js');const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}},{threshold:.06});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
-const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('nav');
+const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('#main-nav');
 const closeMenu=()=>{nav?.classList.remove('open');menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Open navigation')};
 menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav?.classList.contains('open')){closeMenu();menu.focus()}});
